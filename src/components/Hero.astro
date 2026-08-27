@@ -10,8 +10,8 @@ import { site } from '../data/site';
       <Image
         src={heroImage}
         alt={`${site.name} logo over stacked architectural glass sheets`}
-        widths={[720, 1100, 1600, 1920]}
-        sizes="(min-width: 1440px) 1400px, 100vw"
+        widths={[720, 1100, 1600, 1920, 2400]}
+        sizes="(min-width: 1920px) 1880px, 100vw"
         loading="eager"
         fetchpriority="high"
         quality={85}
@@ -23,7 +23,7 @@ import { site } from '../data/site';
 
 <style>
   .hero {
-    padding-block: 0.15rem 1.75rem;
+    padding-block: 0.1rem 0.7rem;
   }
 
   .frame {
@@ -46,19 +46,19 @@ import { site } from '../data/site';
 
   @media (min-width: 600px) {
     .frame {
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 16 / 9;
       min-height: 0;
     }
   }
 
   @media (min-width: 1024px) {
     .hero {
-      padding-block: 0.25rem 2.25rem;
+      padding-block: 0.12rem 0.9rem;
     }
 
     .frame {
-      aspect-ratio: 21 / 10;
-      max-height: 85vh;
+      aspect-ratio: 16 / 9;
+      max-height: 90vh;
     }
   }
 </style>

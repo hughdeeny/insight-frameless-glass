@@ -73,5 +73,22 @@ const jsonLd = {
     <meta itemprop="email" content={site.email} />
     <a class="skip-link" href="#main">Skip to content</a>
     <slot />
+    <script is:inline>
+      (function () {
+        const scrollToHash = () => {
+          const id = location.hash.slice(1);
+          if (!id) return;
+          document.getElementById(id)?.scrollIntoView();
+        };
+        if (document.readyState === 'complete') scrollToHash();
+        else window.addEventListener('load', scrollToHash);
+      })();
+    </script>
+    <script
+      is:inline
+      src="https://widgets.leadconnectorhq.com/loader.js"
+      data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+      data-widget-id="6a8fc3929f17bc64b383a1d3"
+    ></script>
   </body>
 </html>

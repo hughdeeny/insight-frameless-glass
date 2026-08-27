@@ -1,10 +1,11 @@
 ---
 import { Image } from 'astro:assets';
 import { projects } from '../data/site';
-import sylvania from '../assets/images/project-sylvania.png';
-import whaleBeach from '../assets/images/project-whale-beach.png';
-import mosman from '../assets/images/project-mosman.png';
-import turramurra from '../assets/images/project-turramurra.png';
+import triangleIcon from '../assets/icons/project-triangle-icon.svg?raw';
+import sylvania from '../assets/images/project-sylvania.webp';
+import whaleBeach from '../assets/images/project-whale-beach.webp';
+import mosman from '../assets/images/project-mosman.webp';
+import turramurra from '../assets/images/project-turramurra.jpg';
 
 const images = {
   sylvania,
@@ -21,7 +22,7 @@ const images = {
       {
         projects.map((project) => (
           <li>
-            <a class="card" href="#projects">
+            <a class="card" href={`/projects/${project.slug}`}>
               <Image
                 src={images[project.image]}
                 alt={project.alt}
@@ -30,8 +31,10 @@ const images = {
                 quality={80}
                 class="photo"
               />
-              <span class="overlay"></span>
-              <span class="sr-only">{project.name}</span>
+              <span class="overlay">
+                <span class="triangle" set:html={triangleIcon} />
+                <span class="name">{project.name}</span>
+              </span>
             </a>
           </li>
         ))
@@ -75,8 +78,36 @@ const images = {
   .overlay {
     position: absolute;
     inset: 0;
-    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.1rem;
+    background: rgba(0, 0, 0, 0.38);
     transition: background-color 0.45s ease;
+  }
+
+  .triangle {
+    display: block;
+    flex-shrink: 0;
+    width: 2.4rem;
+    height: 2.4rem;
+    color: #fff;
+  }
+
+  .triangle :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .name {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    line-height: 1;
   }
 
   .card:hover .photo,
@@ -86,7 +117,7 @@ const images = {
 
   .card:hover .overlay,
   .card:focus-visible .overlay {
-    background: rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.55);
   }
 
   @media (min-width: 700px) {
@@ -98,12 +129,27 @@ const images = {
       aspect-ratio: 4 / 3.05;
       min-height: 18rem;
     }
+
+    .triangle {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    .name {
+      font-size: 1.05rem;
+      letter-spacing: 0.2em;
+    }
   }
 
   @media (min-width: 1024px) {
     .card {
       min-height: 22rem;
       aspect-ratio: 4 / 3;
+    }
+
+    .triangle {
+      width: 3.25rem;
+      height: 3.25rem;
     }
   }
 </style>

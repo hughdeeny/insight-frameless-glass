@@ -1,13 +1,14 @@
 ---
-import { Image } from 'astro:assets';
-import logoMark from '../assets/images/logo-mark.png';
+import logoMark from '../assets/images/logo-mark.svg?raw';
 import { navItems, site } from '../data/site';
+
+const path = Astro.url.pathname;
 ---
 
 <header class="header">
   <div class="shell bar">
     <a class="brand" href="/" aria-label={`${site.name} home`}>
-      <Image src={logoMark} alt="" width={42} height={42} densities={[1, 2]} />
+      <span class="mark" set:html={logoMark} />
     </a>
 
     <details class="nav" id="site-nav">
@@ -25,7 +26,18 @@ import { navItems, site } from '../data/site';
             {
               navItems.map((item) => (
                 <li>
-                  <a href={item.href}>{item.label}</a>
+                  <a
+                    href={item.href}
+                    aria-current={
+                      item.href === '/'
+                        ? path === '/' ? 'page' : undefined
+                        : path === item.href || path.startsWith(`${item.href}/`)
+                          ? 'page'
+                          : undefined
+                    }
+                  >
+                    {item.label}
+                  </a>
                 </li>
               ))
             }
@@ -49,9 +61,16 @@ import { navItems, site } from '../data/site';
     nav.addEventListener('toggle', setOpen);
     setOpen();
 
+    window.addEventListener('pageshow', () => {
+      nav.open = false;
+      setOpen();
+    });
+
     nav.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
-        nav.open = false;
+        window.setTimeout(() => {
+          nav.open = false;
+        }, 0);
       });
     });
 
@@ -90,10 +109,15 @@ import { navItems, site } from '../data/site';
     flex-shrink: 0;
   }
 
-  .brand img {
+  .mark {
+    display: block;
     width: 36px;
     height: 36px;
-    object-fit: contain;
+  }
+
+  .mark :global(svg) {
+    width: 100%;
+    height: 100%;
   }
 
   .menu-btn {
@@ -196,12 +220,13 @@ import { navItems, site } from '../data/site';
   }
 
   .panel-nav a:hover,
-  .panel-nav a:focus-visible {
+  .panel-nav a:focus-visible,
+  .panel-nav a[aria-current='page'] {
     opacity: 0.65;
   }
 
   @media (min-width: 768px) {
-    .brand img {
+    .mark {
       width: 42px;
       height: 42px;
     }

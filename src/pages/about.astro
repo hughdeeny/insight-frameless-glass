@@ -1,0 +1,118 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageBanner from '../components/PageBanner.astro';
+import aboutBanner from '../assets/images/about-banner.webp';
+import aboutTom from '../assets/images/about-tom.avif';
+import { Image } from 'astro:assets';
+---
+
+<Layout
+  title="About Insight Frameless Glass | Sydney"
+  description="Founded by Tom in 2023, Insight Frameless Glass is a licensed Sydney team specialising in high quality frameless glass installations."
+>
+  <Header />
+  <main id="main">
+    <div class="shell banner-wrap">
+      <PageBanner
+        image={aboutBanner}
+        label="About"
+        alt="Frameless glass pool fencing around a Sydney backyard pool"
+      />
+    </div>
+
+    <section class="page-block">
+      <div class="shell split">
+        <div class="copy">
+          <h1>About Us</h1>
+          <div class="prose">
+            <p>
+              Founded by Tom in 2023 after 15 years in the construction industry,
+              Insight Frameless Glass brings together a professional team with a
+              wealth of combined experience in glass installations. Fully licensed
+              and insured, we pride ourselves on friendly, respectful and timely
+              service. With a focus on high quality work and customer needs, we’re
+              consistent in producing amazing outcomes that last!
+            </p>
+            <h2>Meet Tom</h2>
+            <p>
+              After graduating university in his native England, Tom left for
+              Australia in 2013. With family ties in construction, Tom settled
+              comfortably into Sydney’s building scene gaining invaluable local
+              experience in Carpentry and Landscaping before specialising in
+              Frameless Glass 7 years ago.
+            </p>
+            <p>
+              Insight Frameless Glass speaks to Tom’s ongoing commitment to quality
+              craftsmanship and healthy customer relations. Over the years Tom has
+              developed a particular appreciation for glass as a product and is
+              proud to call himself an expert in the installation of such a
+              timeless material.
+            </p>
+            <p>To chat and arrange a free quote, please get in touch.</p>
+          </div>
+          <a class="btn" href="/contact">Contact</a>
+        </div>
+        <figure>
+          <Image
+            src={aboutTom}
+            alt="Tom Hammond, founder of Insight Frameless Glass Sydney"
+            widths={[400, 748, 1100]}
+            sizes="(min-width: 900px) 40vw, 100vw"
+            quality={80}
+            class="portrait"
+          />
+        </figure>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .banner-wrap {
+    padding-top: 0.5rem;
+  }
+
+  .split {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 4vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+
+  .prose h2 {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+  }
+
+  .btn {
+    margin-top: 2rem;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  .portrait {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 3 / 4;
+  }
+
+  @media (min-width: 900px) {
+    .split {
+      grid-template-columns: 1fr 0.9fr;
+      gap: 4.5rem;
+      align-items: center;
+    }
+  }
+</style>

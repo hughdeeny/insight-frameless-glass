@@ -1,0 +1,154 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageBanner from '../components/PageBanner.astro';
+import { Image } from 'astro:assets';
+import { services } from '../data/site';
+import servicesBanner from '../assets/images/services-banner.avif';
+import servicePool from '../assets/images/service-pool.avif';
+import serviceBalustrade from '../assets/images/service-balustrade.webp';
+import serviceStair from '../assets/images/service-stair.avif';
+import serviceShower from '../assets/images/service-shower.avif';
+import serviceSlat from '../assets/images/service-slat.avif';
+import serviceFlatTop from '../assets/images/service-flat-top.avif';
+
+const images = {
+  pool: servicePool,
+  balustrade: serviceBalustrade,
+  stair: serviceStair,
+  shower: serviceShower,
+  slat: serviceSlat,
+  'flat-top': serviceFlatTop,
+} as const;
+---
+
+<Layout
+  title="Glass Balustrades, Pool Fencing & Shower Screens | Sydney"
+  description="Insight Frameless Glass specialises in glass pool fencing, balustrades, stairways, shower screens and aluminium fencing across Sydney."
+>
+  <Header />
+  <main id="main">
+    <div class="shell banner-wrap">
+      <PageBanner
+        image={servicesBanner}
+        label="Services"
+        alt="Stacked architectural glass sheets"
+      />
+    </div>
+
+    <section class="page-block intro">
+      <div class="shell">
+        <h1>The More Insight, The Better</h1>
+        <p>
+          Insight can assist with a wide range of projects large and small,
+          scroll down to see our specialty services.
+        </p>
+      </div>
+    </section>
+
+    {
+      [...services]
+        .sort((a, b) => a.pageOrder - b.pageOrder)
+        .map((service, index) => (
+        <section class:list={['service', index % 2 === 1 && 'flip']} id={service.slug}>
+          <div class="shell split">
+            <figure>
+              <Image
+                src={images[service.image]}
+                alt={service.alt}
+                widths={[480, 768, 1200]}
+                sizes="(min-width: 900px) 46vw, 100vw"
+                quality={75}
+                class="photo"
+              />
+            </figure>
+            <div class="copy">
+              <h2>{service.name}</h2>
+              <div class="prose">
+                {service.paragraphs.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+              </div>
+              <a class="btn" href="/contact">Enquire</a>
+            </div>
+          </div>
+        </section>
+      ))
+    }
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .banner-wrap {
+    padding-top: 0.5rem;
+  }
+
+  .intro {
+    padding-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 4vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .intro p {
+    max-width: 36rem;
+    font-size: 1.125rem;
+  }
+
+  .service {
+    padding-block: 2.5rem;
+    scroll-margin-top: 1.5rem;
+  }
+
+  .split {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  .photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  h2 {
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .btn {
+    margin-top: 1.75rem;
+  }
+
+  @media (min-width: 900px) {
+    .service {
+      padding-block: 3.5rem;
+    }
+
+    .split {
+      grid-template-columns: 1fr 1fr;
+      gap: 4.5rem;
+    }
+
+    .flip .split {
+      direction: rtl;
+    }
+
+    .flip .copy {
+      direction: ltr;
+    }
+  }
+</style>

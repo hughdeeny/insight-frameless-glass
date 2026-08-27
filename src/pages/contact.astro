@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+---
+
+<Layout
+  title="Contact Insight Frameless Glass | Sydney"
+  description="Contact Insight Frameless Glass in Sydney for a free quote on glass pool fencing, balustrades, stairways and shower screens."
+>
+  <Header />
+  <main id="main">
+    <section class="page-block">
+      <div class="shell intro">
+        <h1>Get in touch</h1>
+        <p class="details">
+          <a href={site.phoneHref}>Phone — {site.phone}</a>
+          <a href={`mailto:${site.email}`}>Email — {site.email}</a>
+        </p>
+        <p>
+          We endeavour to respond to all enquiries within one business day. If
+          you require a faster response, please feel free to contact us via
+          phone.
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .page-block {
+    padding-bottom: 0;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .intro p {
+    max-width: 36rem;
+  }
+
+  .details {
+    display: grid;
+    gap: 0.45rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.88rem;
+  }
+
+  .details a {
+    text-decoration: none;
+  }
+
+  .details a:hover,
+  .details a:focus-visible {
+    text-decoration: underline;
+  }
+</style>

@@ -1,13 +1,19 @@
 ---
 import { services, type ServiceIcon } from '../data/site';
+import poolIcon from '../assets/icons/pool-icon.svg?raw';
+import balustradeIcon from '../assets/icons/balustrade-icon.svg?raw';
+import slatIcon from '../assets/icons/slat-fence-icon.svg?raw';
+import stairIcon from '../assets/icons/stair-glass-icon.svg?raw';
+import showerIcon from '../assets/icons/shower-icon.svg?raw';
+import flatTopIcon from '../assets/icons/flat-top-fencing.svg?raw';
 
 const icons: Record<ServiceIcon, string> = {
-  pool: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="8" y="22" width="48" height="28" /><path d="M8 30h48M16 38c2.5 2 5.5 2 8 0s5.5-2 8 0 5.5 2 8 0 5.5-2 8 0 5.5 2 8 0M20 14v8M44 14v8M16 14h8M40 14h8" /></svg>`,
-  balustrade: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M10 50V18h44v32M10 26h44M18 18v32M46 18v32" /></svg>`,
-  slat: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M12 14v36M20 14v36M28 14v36M36 14v36M44 14v36M52 14v36M10 14h44M10 50h44" /></svg>`,
-  stair: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M10 50h12V38h12V26h12V14h12M22 50V38M34 38V26M46 26V14" /></svg>`,
-  shower: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="14" y="10" width="36" height="44" /><path d="M32 10v44M40 22h4M42 22v8M38 34c0 2 2 4 4 4s4-2 4-4" /></svg>`,
-  'flat-top': `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M8 14h48M8 18h48M14 18v30M26 18v30M38 18v30M50 18v30M10 48h44" /></svg>`,
+  pool: poolIcon,
+  balustrade: balustradeIcon,
+  slat: slatIcon,
+  stair: stairIcon,
+  shower: showerIcon,
+  'flat-top': flatTopIcon,
 };
 ---
 

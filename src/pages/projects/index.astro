@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ProjectsGrid from '../../components/ProjectsGrid.astro';
+import PageBanner from '../../components/PageBanner.astro';
+import heroImage from '../../assets/images/hero-glass.png';
+---
+
+<Layout
+  title="Projects | Insight Frameless Glass Sydney"
+  description="Selected Insight Frameless Glass projects across Sydney, including Sylvania, Whale Beach, Mosman and Turramurra."
+>
+  <Header />
+  <main id="main">
+    <div class="shell banner-wrap">
+      <PageBanner
+        image={heroImage}
+        label="Projects"
+        alt="Insight Frameless Glass logo over stacked architectural glass"
+      />
+    </div>
+    <section class="page-block heading">
+      <div class="shell">
+        <h1>Projects — Frameless Glass</h1>
+      </div>
+    </section>
+    <ProjectsGrid />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .banner-wrap {
+    padding-top: 0.5rem;
+  }
+
+  .heading {
+    padding-bottom: 1.75rem;
+  }
+
+  h1 {
+    font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+</style>

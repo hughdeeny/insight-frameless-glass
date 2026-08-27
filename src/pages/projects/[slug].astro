@@ -1,0 +1,233 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { Image } from 'astro:assets';
+import { projects } from '../../data/site';
+import { projectGalleries } from '../../data/galleries';
+import sylvania from '../../assets/images/project-sylvania.webp';
+import whaleBeach from '../../assets/images/project-whale-beach.webp';
+import mosman from '../../assets/images/project-mosman.webp';
+import turramurra from '../../assets/images/project-turramurra.jpg';
+
+const images = {
+  sylvania,
+  whaleBeach,
+  mosman,
+  turramurra,
+} as const;
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const others = projects.filter((item) => item.slug !== project.slug);
+const gallery = projectGalleries[project.slug] ?? [];
+---
+
+<Layout
+  title={`${project.name} Project | Insight Frameless Glass`}
+  description={`${project.name} frameless glass project by Insight Frameless Glass, completed in ${project.year}.`}
+>
+  <Header />
+  <main id="main">
+    <div class="shell">
+      <figure class="hero">
+        <Image
+          src={images[project.image]}
+          alt={project.alt}
+          widths={[720, 1100, 1600]}
+          sizes="(min-width: 1440px) 1400px, 100vw"
+          quality={80}
+          class="photo"
+        />
+      </figure>
+    </div>
+
+    <article class="page-block">
+      <div class="shell copy">
+        <p class="kicker">Project</p>
+        <h1>{project.name}</h1>
+        <p class="meta">Year completed: {project.year}</p>
+        <blockquote>
+          <p>‘{project.quote}’</p>
+        </blockquote>
+        <div class="prose">
+          {project.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <a class="btn" href="/contact">Enquire</a>
+      </div>
+    </article>
+
+    {
+      gallery.length > 0 && (
+        <section class="gallery" aria-label={`${project.name} gallery`}>
+          <div class="shell">
+            <ul>
+              {
+                gallery.map((item) => (
+                  <li>
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      widths={[400, 720, 1100]}
+                      sizes="(min-width: 1100px) 25vw, (min-width: 700px) 50vw, 100vw"
+                      quality={80}
+                    />
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </section>
+      )
+    }
+
+    <section class="more" aria-labelledby="more-heading">
+      <div class="shell">
+        <h2 id="more-heading">More projects</h2>
+        <ul>
+          {
+            others.map((item) => (
+              <li>
+                <a href={`/projects/${item.slug}`}>{item.name}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    margin: 0.5rem 0 0;
+    overflow: hidden;
+    background: #111;
+  }
+
+  .photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .copy {
+    max-width: 46rem;
+  }
+
+  .kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .meta {
+    margin: 1rem 0 1.75rem;
+    color: var(--color-muted);
+    letter-spacing: 0.04em;
+  }
+
+  blockquote {
+    margin: 0 0 1.75rem;
+    padding: 0;
+    border: 0;
+  }
+
+  blockquote p {
+    font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .btn {
+    margin-top: 2rem;
+  }
+
+  .gallery {
+    padding: 0 0 3.5rem;
+  }
+
+  .gallery ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .gallery img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .more {
+    padding: 2rem 0 4rem;
+    border-top: 1px solid #e6e6e6;
+  }
+
+  .more h2 {
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+  }
+
+  .more ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .more a {
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+
+  .more a:hover,
+  .more a:focus-visible {
+    text-decoration: underline;
+  }
+
+  @media (min-width: 700px) {
+    .gallery ul {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .gallery {
+      padding-bottom: 5rem;
+    }
+
+    .gallery ul {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

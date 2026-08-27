@@ -1,24 +1,24 @@
 ---
 import { Image } from 'astro:assets';
-import logoMark from '../assets/images/logo-mark.png';
-import footerPattern from '../assets/images/footer-pattern.jpg';
+import logoStacked from '../assets/images/logo-stacked.png';
 import { navItems, site, socials } from '../data/site';
+import LeadForm from './LeadForm.astro';
 ---
 
-<footer class="footer" id="contact">
-  <div
-    class="backdrop"
-    style={`background-image: url(${footerPattern.src})`}
-  >
-  </div>
+<LeadForm />
+<footer class="footer">
   <div class="shell inner">
     <div class="top">
       <a class="brand" href="/" aria-label={`${site.name} home`}>
-        <Image src={logoMark} alt="" width={56} height={56} densities={[1, 2]} class="mark" />
-        <span class="wordmark">
-          <span class="name">insight</span>
-          <span class="tag">Frameless Glass</span>
-        </span>
+        <Image
+          src={logoStacked}
+          alt=""
+          width={168}
+          height={192}
+          widths={[168, 336]}
+          sizes="168px"
+          class="logo"
+        />
       </a>
       <ul class="socials">
         {
@@ -72,24 +72,19 @@ import { navItems, site, socials } from '../data/site';
   .footer {
     position: relative;
     isolation: isolate;
+    overflow: hidden;
     color: #fff;
     background-color: var(--color-navy);
+    background-image: url('/images/footer-pattern.png');
+    background-size: cover;
+    background-position: center;
     margin-top: 0;
     min-height: 22rem;
   }
 
-  .backdrop {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background-color: var(--color-navy);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.55;
-  }
-
   .inner {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -106,38 +101,18 @@ import { navItems, site, socials } from '../data/site';
   }
 
   .brand {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    text-decoration: none;
-    color: #fff;
+    display: block;
+    width: 7.5rem;
   }
 
-  .mark {
-    width: 3.15rem;
-    height: 3.15rem;
-    filter: brightness(0) invert(1);
+  .logo {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
   }
 
-  .wordmark {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.12rem;
-  }
-
-  .name {
-    font-size: 1.85rem;
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-
-  .tag {
-    font-size: 0.62rem;
-    font-weight: 400;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
+  .top {
+    align-items: flex-start;
   }
 
   .socials {
@@ -217,13 +192,8 @@ import { navItems, site, socials } from '../data/site';
       align-items: flex-start;
     }
 
-    .mark {
-      width: 3.5rem;
-      height: 3.5rem;
-    }
-
-    .name {
-      font-size: 2.1rem;
+    .brand {
+      width: 9.5rem;
     }
   }
 
@@ -235,6 +205,10 @@ import { navItems, site, socials } from '../data/site';
 
     .inner {
       padding-block: 6rem 2.75rem;
+    }
+
+    .brand {
+      width: 10.5rem;
     }
   }
 </style>

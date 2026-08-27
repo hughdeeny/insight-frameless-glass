@@ -11,40 +11,47 @@ const path = Astro.url.pathname;
       <span class="mark" set:html={logoMark} />
     </a>
 
-    <details class="nav" id="site-nav">
-      <summary class="menu-btn">
-        <span class="burger" aria-hidden="true">
-          <span></span>
-          <span></span>
-        </span>
-        <span class="menu-label">Menu</span>
-      </summary>
+    <div class="tools">
+      <a class="call" href={site.phoneHref}>
+        <span class="call-kicker">Call now</span>
+        <span class="call-number">{site.phone}</span>
+      </a>
 
-      <div class="panel">
-        <nav class="panel-nav" aria-label="Primary">
-          <ul>
-            {
-              navItems.map((item) => (
-                <li>
-                  <a
-                    href={item.href}
-                    aria-current={
-                      item.href === '/'
-                        ? path === '/' ? 'page' : undefined
-                        : path === item.href || path.startsWith(`${item.href}/`)
-                          ? 'page'
-                          : undefined
-                    }
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </nav>
-      </div>
-    </details>
+      <details class="nav" id="site-nav">
+        <summary class="menu-btn">
+          <span class="burger" aria-hidden="true">
+            <span></span>
+            <span></span>
+          </span>
+          <span class="menu-label">Menu</span>
+        </summary>
+
+        <div class="panel">
+          <nav class="panel-nav" aria-label="Primary">
+            <ul>
+              {
+                navItems.map((item) => (
+                  <li>
+                    <a
+                      href={item.href}
+                      aria-current={
+                        item.href === '/'
+                          ? path === '/' ? 'page' : undefined
+                          : path === item.href || path.startsWith(`${item.href}/`)
+                            ? 'page'
+                            : undefined
+                      }
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+        </div>
+      </details>
+    </div>
   </div>
 </header>
 
@@ -84,16 +91,22 @@ const path = Astro.url.pathname;
   .header {
     position: relative;
     z-index: 120;
-    background: #fff;
+    background: var(--color-bg);
     min-height: var(--header-height);
+    border-bottom: 1px solid var(--color-line);
   }
 
   :global(body.nav-open) .header {
     background: transparent;
+    border-bottom-color: transparent;
   }
 
   :global(body.nav-open) .brand {
     visibility: hidden;
+  }
+
+  :global(body.nav-open) .call {
+    color: var(--color-white);
   }
 
   .bar {
@@ -107,12 +120,19 @@ const path = Astro.url.pathname;
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    opacity: 0.92;
+    transition: opacity var(--duration-fast) var(--ease);
+  }
+
+  .brand:hover,
+  .brand:focus-visible {
+    opacity: 1;
   }
 
   .mark {
     display: block;
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
   }
 
   .mark :global(svg) {
@@ -120,20 +140,61 @@ const path = Astro.url.pathname;
     height: 100%;
   }
 
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .call {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.22rem;
+    text-decoration: none;
+    color: var(--color-rule);
+    padding: 0.15rem 0;
+    transition: opacity var(--duration-fast) var(--ease);
+  }
+
+  .call:hover,
+  .call:focus-visible {
+    opacity: 0.62;
+  }
+
+  .call-kicker {
+    font-size: 0.625rem;
+    font-weight: var(--weight-regular);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .call-number {
+    font-size: 0.78rem;
+    font-weight: var(--weight-regular);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
   .menu-btn {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     display: inline-flex;
     align-items: center;
-    gap: 0.7rem;
+    gap: 0.75rem;
     list-style: none;
     cursor: pointer;
     color: var(--color-rule);
     padding: 0.45rem 0.1rem;
+    transition: color var(--duration-fast) var(--ease);
   }
 
   .nav[open] .menu-btn {
-    color: #fff;
+    color: var(--color-white);
   }
 
   .menu-btn::-webkit-details-marker,
@@ -144,9 +205,10 @@ const path = Astro.url.pathname;
 
   .menu-label {
     display: none;
-    font-size: 0.95rem;
-    font-weight: 400;
-    letter-spacing: 0.02em;
+    font-size: var(--text-label);
+    font-weight: var(--weight-regular);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
     line-height: 1;
   }
 
@@ -155,31 +217,31 @@ const path = Astro.url.pathname;
     flex-direction: column;
     justify-content: center;
     gap: 6px;
-    width: 22px;
+    width: 20px;
   }
 
   .burger span {
     display: block;
-    height: 1.5px;
+    height: 1px;
     background: currentColor;
-    transition: transform 0.25s ease, width 0.25s ease;
+    transition: transform var(--duration-fast) var(--ease), width var(--duration-fast) var(--ease);
   }
 
   .burger span:first-child {
-    width: 22px;
+    width: 20px;
   }
 
   .burger span:last-child {
-    width: 15px;
+    width: 13px;
   }
 
   .nav[open] .burger span:first-child {
-    transform: translateY(3.75px) rotate(45deg);
+    transform: translateY(3.5px) rotate(45deg);
   }
 
   .nav[open] .burger span:last-child {
-    width: 22px;
-    transform: translateY(-3.75px) rotate(-45deg);
+    width: 20px;
+    transform: translateY(-3.5px) rotate(-45deg);
   }
 
   .nav[open] .menu-label {
@@ -190,14 +252,10 @@ const path = Astro.url.pathname;
     position: fixed;
     inset: 0;
     z-index: 1;
-    display: none;
+    display: grid;
     place-items: center;
     background: var(--color-navy);
     padding: 5rem 1.5rem 3rem;
-  }
-
-  .nav[open] .panel {
-    display: grid;
   }
 
   .panel-nav ul {
@@ -209,35 +267,49 @@ const path = Astro.url.pathname;
 
   .panel-nav a {
     display: inline-block;
-    padding: 0.7rem 0.5rem;
-    color: #fff;
+    padding: 0.75rem 0.5rem;
+    color: var(--color-white);
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 0.28em;
-    font-size: 0.95rem;
-    font-weight: 400;
-    transition: opacity 0.2s ease;
+    letter-spacing: 0.32em;
+    font-size: 0.82rem;
+    font-weight: var(--weight-regular);
+    opacity: 0.78;
+    transition: opacity var(--duration-fast) var(--ease);
   }
 
   .panel-nav a:hover,
   .panel-nav a:focus-visible,
   .panel-nav a[aria-current='page'] {
-    opacity: 0.65;
+    opacity: 1;
   }
 
   @media (min-width: 768px) {
     .mark {
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
     }
 
     .menu-label {
       display: inline;
     }
 
+    .tools {
+      gap: 1.6rem;
+    }
+
+    .call-kicker {
+      font-size: var(--text-label);
+    }
+
+    .call-number {
+      font-size: 0.9rem;
+    }
+
     .panel-nav a {
-      font-size: 1.05rem;
-      padding: 0.85rem 0.5rem;
+      font-size: 0.95rem;
+      padding: 0.9rem 0.5rem;
+      letter-spacing: 0.36em;
     }
   }
 </style>

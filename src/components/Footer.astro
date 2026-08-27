@@ -73,7 +73,7 @@ import LeadForm from './LeadForm.astro';
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    color: #fff;
+    color: var(--color-white);
     background-color: var(--color-navy);
     background-image: url('/images/footer-pattern.png');
     background-size: cover;
@@ -128,8 +128,8 @@ import LeadForm from './LeadForm.astro';
     place-items: center;
     width: 2.15rem;
     height: 2.15rem;
-    color: #fff;
-    transition: opacity 0.2s ease;
+    color: var(--color-white);
+    transition: opacity var(--duration-fast) var(--ease);
   }
 
   .socials a:hover,
@@ -152,12 +152,12 @@ import LeadForm from './LeadForm.astro';
   }
 
   .links a {
-    color: #fff;
+    color: var(--color-white);
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 0.18em;
-    font-size: 0.72rem;
-    transition: opacity 0.2s ease;
+    letter-spacing: var(--tracking-label);
+    font-size: var(--text-label);
+    transition: opacity var(--duration-fast) var(--ease);
   }
 
   .links a:hover,
@@ -166,9 +166,10 @@ import LeadForm from './LeadForm.astro';
   }
 
   .copy {
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
-    opacity: 0.85;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    font-weight: var(--weight-light);
+    opacity: 0.72;
   }
 
   @media (min-width: 768px) {

@@ -54,13 +54,13 @@ const icons: Record<ServiceIcon, string> = {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 1.1rem;
+    gap: 1.15rem;
     min-height: 8.5rem;
     padding: 1.25rem 0.75rem;
     text-align: center;
     text-decoration: none;
     color: var(--color-muted);
-    transition: color 0.25s ease;
+    transition: color var(--duration-fast) var(--ease);
   }
 
   .icon {
@@ -68,8 +68,12 @@ const icons: Record<ServiceIcon, string> = {
     place-items: center;
     width: 3.5rem;
     height: 3.5rem;
-    color: #4a4a4a;
-    transition: transform 0.3s ease, color 0.25s ease;
+    color: var(--color-muted);
+    opacity: 0.82;
+    transition:
+      transform var(--duration) var(--ease),
+      color var(--duration-fast) var(--ease),
+      opacity var(--duration-fast) var(--ease);
   }
 
   .icon :global(svg) {
@@ -78,11 +82,11 @@ const icons: Record<ServiceIcon, string> = {
   }
 
   .label {
-    font-size: 0.72rem;
-    font-weight: 400;
-    letter-spacing: 0.14em;
+    font-size: var(--text-label);
+    font-weight: var(--weight-regular);
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    line-height: 1.45;
+    line-height: 1.5;
     max-width: 14rem;
   }
 
@@ -94,7 +98,8 @@ const icons: Record<ServiceIcon, string> = {
   .item:hover .icon,
   .item:focus-visible .icon {
     color: var(--color-rule);
-    transform: translateY(-3px);
+    opacity: 1;
+    transform: translateY(-2px);
   }
 
   @media (min-width: 900px) {
@@ -118,8 +123,8 @@ const icons: Record<ServiceIcon, string> = {
     }
 
     .label {
-      font-size: 0.8125rem;
-      letter-spacing: 0.12em;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
     }
   }
 </style>

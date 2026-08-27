@@ -1,0 +1,109 @@
+---
+import { Image } from 'astro:assets';
+import { projects } from '../data/site';
+import sylvania from '../assets/images/project-sylvania.png';
+import whaleBeach from '../assets/images/project-whale-beach.png';
+import mosman from '../assets/images/project-mosman.png';
+import turramurra from '../assets/images/project-turramurra.png';
+
+const images = {
+  sylvania,
+  whaleBeach,
+  mosman,
+  turramurra,
+} as const;
+---
+
+<section class="projects" id="projects">
+  <div class="shell">
+    <h2 class="sr-only">Projects</h2>
+    <ul class="grid">
+      {
+        projects.map((project) => (
+          <li>
+            <a class="card" href="#projects">
+              <Image
+                src={images[project.image]}
+                alt={project.alt}
+                widths={[480, 800, 1200]}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                quality={80}
+                class="photo"
+              />
+              <span class="overlay"></span>
+              <span class="sr-only">{project.name}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .projects {
+    padding-bottom: 0;
+  }
+
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    color: #fff;
+    text-decoration: none;
+    background: #1a1a1a;
+  }
+
+  .photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.001);
+    transition: transform 0.7s ease;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    transition: background-color 0.45s ease;
+  }
+
+  .card:hover .photo,
+  .card:focus-visible .photo {
+    transform: scale(1.04);
+  }
+
+  .card:hover .overlay,
+  .card:focus-visible .overlay {
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  @media (min-width: 700px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .card {
+      aspect-ratio: 4 / 3.05;
+      min-height: 18rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .card {
+      min-height: 22rem;
+      aspect-ratio: 4 / 3;
+    }
+  }
+</style>

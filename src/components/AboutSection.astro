@@ -1,0 +1,128 @@
+---
+import { Image } from 'astro:assets';
+import aboutImage from '../assets/images/about-project.png';
+---
+
+<section class="about" id="about">
+  <div class="shell split">
+    <div class="copy">
+      <h1>Insight Frameless Glass Sydney</h1>
+      <div class="body">
+        <p>
+          Insight Frameless Glass is a dedicated team of skilled tradesfolk committed
+          to the design and installation of high quality glass fencing. We're a proud,
+          Sydney based company with a rich 10 year history of experience in the
+          industry. From Newcastle to Wollongong, we've built great client relations
+          through friendly, open and timely communication.
+        </p>
+        <p>
+          At Insight we understand quality and believe in the beauty of glass. We
+          know that once the work is done, it becomes part of your home, and by
+          extension part of you. That's why we put you above all else.
+        </p>
+        <p>
+          Whether it's a pool fence in a leafy back garden or a balustrade on a
+          modern apartment, our glass will enhance your space and emanate the
+          character of your surroundings. Our careful selection of top quality
+          materials and brands will ensure that your product is not only visually
+          striking, but safe and long lasting.
+        </p>
+      </div>
+      <a class="about-btn" href="#about">About</a>
+    </div>
+
+    <figure class="media">
+      <Image
+        src={aboutImage}
+        alt="Frameless glass pool fencing and balcony balustrade at a Sydney home"
+        widths={[480, 768, 1200]}
+        sizes="(min-width: 900px) 42vw, 100vw"
+        quality={75}
+        class="photo"
+      />
+    </figure>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding-block: 3.5rem 2.5rem;
+  }
+
+  .split {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: clamp(1.65rem, 3.4vw, 2.375rem);
+    font-weight: 700;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.15rem;
+  }
+
+  .body {
+    display: grid;
+    gap: 1.15rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--color-text);
+    max-width: 38rem;
+  }
+
+  .about-btn {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 2rem;
+    padding: 0.95rem 3.4rem 0.95rem 2.4rem;
+    border: 1px solid var(--color-rule);
+    color: var(--color-rule);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.6875rem;
+    font-weight: 400;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .about-btn:hover,
+  .about-btn:focus-visible {
+    background: var(--color-rule);
+    color: #fff;
+  }
+
+  .media {
+    margin: 0;
+  }
+
+  .photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  @media (min-width: 900px) {
+    .about {
+      padding-block: 5.5rem 3.5rem;
+    }
+
+    .split {
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .copy {
+      padding-right: 1rem;
+    }
+
+    .body {
+      font-size: 1.125rem;
+      line-height: 1.5;
+    }
+  }
+</style>

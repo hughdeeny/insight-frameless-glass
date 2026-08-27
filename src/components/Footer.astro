@@ -1,0 +1,240 @@
+---
+import { Image } from 'astro:assets';
+import logoMark from '../assets/images/logo-mark.png';
+import footerPattern from '../assets/images/footer-pattern.jpg';
+import { navItems, site, socials } from '../data/site';
+---
+
+<footer class="footer" id="contact">
+  <div
+    class="backdrop"
+    style={`background-image: url(${footerPattern.src})`}
+  >
+  </div>
+  <div class="shell inner">
+    <div class="top">
+      <a class="brand" href="/" aria-label={`${site.name} home`}>
+        <Image src={logoMark} alt="" width={56} height={56} densities={[1, 2]} class="mark" />
+        <span class="wordmark">
+          <span class="name">insight</span>
+          <span class="tag">Frameless Glass</span>
+        </span>
+      </a>
+      <ul class="socials">
+        {
+          socials.map((item) => (
+            <li>
+              <a href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label}>
+                {item.icon === 'linkedin' && (
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="1" stroke="currentColor" stroke-width="1.3" />
+                    <path d="M8 10.5V17M8 7.5v.2M12 17v-4.2c0-1.3.7-2.3 2.1-2.3 1.4 0 1.9 1 1.9 2.4V17" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+                  </svg>
+                )}
+                {item.icon === 'facebook' && (
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.3" />
+                    <path d="M13 8h1.6M13 12h2.4M13 8v8M13 8h-1.4A1.6 1.6 0 0 0 10 9.6V12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+                  </svg>
+                )}
+                {item.icon === 'instagram' && (
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.3" />
+                    <circle cx="12" cy="12" r="3.4" stroke="currentColor" stroke-width="1.3" />
+                    <circle cx="16.4" cy="7.6" r="0.8" fill="currentColor" />
+                  </svg>
+                )}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="bottom">
+      <nav aria-label="Footer">
+        <ul class="links">
+          {
+            navItems.map((item) => (
+              <li>
+                <a href={item.href}>{item.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <p class="copy">&copy; {site.name}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    isolation: isolate;
+    color: #fff;
+    background-color: var(--color-navy);
+    margin-top: 0;
+    min-height: 22rem;
+  }
+
+  .backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--color-navy);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.55;
+  }
+
+  .inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 22rem;
+    padding-block: 3.5rem 2rem;
+    gap: 4rem;
+  }
+
+  .top,
+  .bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .mark {
+    width: 3.15rem;
+    height: 3.15rem;
+    filter: brightness(0) invert(1);
+  }
+
+  .wordmark {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.12rem;
+  }
+
+  .name {
+    font-size: 1.85rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .tag {
+    font-size: 0.62rem;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .socials {
+    display: flex;
+    gap: 0.85rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .socials a {
+    display: grid;
+    place-items: center;
+    width: 2.15rem;
+    height: 2.15rem;
+    color: #fff;
+    transition: opacity 0.2s ease;
+  }
+
+  .socials a:hover,
+  .socials a:focus-visible {
+    opacity: 0.65;
+  }
+
+  .socials svg {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem 1.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .links a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.72rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .links a:hover,
+  .links a:focus-visible {
+    opacity: 0.65;
+  }
+
+  .copy {
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    opacity: 0.85;
+  }
+
+  @media (min-width: 768px) {
+    .footer,
+    .inner {
+      min-height: 28rem;
+    }
+
+    .inner {
+      padding-block: 5rem 2.5rem;
+    }
+
+    .top,
+    .bottom {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .top {
+      align-items: flex-start;
+    }
+
+    .mark {
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+
+    .name {
+      font-size: 2.1rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .footer,
+    .inner {
+      min-height: 32rem;
+    }
+
+    .inner {
+      padding-block: 6rem 2.75rem;
+    }
+  }
+</style>

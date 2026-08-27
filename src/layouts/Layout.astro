@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+import '@fontsource/jost/latin-300.css';
+import '@fontsource/jost/latin-400.css';
+import '@fontsource/jost/latin-700.css';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = site.title,
+  description = site.description,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? site.url);
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  name: site.name,
+  legalName: site.legalName,
+  url: site.url,
+  telephone: site.phoneHref.replace('tel:', ''),
+  email: site.email,
+  description: site.description,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Sydney',
+    addressRegion: 'NSW',
+    addressCountry: 'AU',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Sydney' },
+    { '@type': 'City', name: 'Newcastle' },
+    { '@type': 'City', name: 'Wollongong' },
+  ],
+  sameAs: [
+    'https://www.linkedin.com/in/tom-hammond-3356b3317/',
+    'https://www.facebook.com/people/Insight-Frameless-Glass-Pty-Ltd/61563441032636/',
+    'https://www.instagram.com/insightframelessglass/',
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#062B49" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_AU" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body itemscope itemtype="https://schema.org/LocalBusiness">
+    <meta itemprop="name" content={site.name} />
+    <meta itemprop="telephone" content={site.phone} />
+    <meta itemprop="email" content={site.email} />
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>

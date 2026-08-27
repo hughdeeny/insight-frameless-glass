@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets';
+import heroImage from '../assets/images/hero-glass.png';
+import { site } from '../data/site';
+---
+
+<section class="hero" aria-label="Introduction">
+  <div class="shell">
+    <div class="frame">
+      <Image
+        src={heroImage}
+        alt={`${site.name} logo over stacked architectural glass sheets`}
+        widths={[720, 1100, 1600, 1920]}
+        sizes="(min-width: 1440px) 1400px, 100vw"
+        loading="eager"
+        fetchpriority="high"
+        quality={80}
+        class="photo"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: 0.35rem 1.75rem;
+  }
+
+  .frame {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    min-height: 22rem;
+    background: #141618;
+  }
+
+  .photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (min-width: 600px) {
+    .frame {
+      aspect-ratio: 16 / 10;
+      min-height: 0;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero {
+      padding-block: 0.5rem 2.25rem;
+    }
+
+    .frame {
+      aspect-ratio: 21 / 10;
+      max-height: 85vh;
+    }
+  }
+</style>

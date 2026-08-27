@@ -1,0 +1,119 @@
+---
+import { services, type ServiceIcon } from '../data/site';
+
+const icons: Record<ServiceIcon, string> = {
+  pool: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="8" y="22" width="48" height="28" /><path d="M8 30h48M16 38c2.5 2 5.5 2 8 0s5.5-2 8 0 5.5 2 8 0 5.5-2 8 0 5.5 2 8 0M20 14v8M44 14v8M16 14h8M40 14h8" /></svg>`,
+  balustrade: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M10 50V18h44v32M10 26h44M18 18v32M46 18v32" /></svg>`,
+  slat: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M12 14v36M20 14v36M28 14v36M36 14v36M44 14v36M52 14v36M10 14h44M10 50h44" /></svg>`,
+  stair: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M10 50h12V38h12V26h12V14h12M22 50V38M34 38V26M46 26V14" /></svg>`,
+  shower: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="14" y="10" width="36" height="44" /><path d="M32 10v44M40 22h4M42 22v8M38 34c0 2 2 4 4 4s4-2 4-4" /></svg>`,
+  'flat-top': `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M8 14h48M8 18h48M14 18v30M26 18v30M38 18v30M50 18v30M10 48h44" /></svg>`,
+};
+---
+
+<section class="services" id="services">
+  <div class="shell">
+    <h2 class="sr-only">Services</h2>
+    <ul class="grid">
+      {
+        services.map((service) => (
+          <li>
+            <a class="item" href={service.href}>
+              <span class="icon" set:html={icons[service.icon]} />
+              <span class="label">{service.name}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .services {
+    padding-block: 1.5rem 3.5rem;
+  }
+
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.25rem 1.25rem;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.1rem;
+    min-height: 8.5rem;
+    padding: 1.25rem 0.75rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--color-muted);
+    transition: color 0.25s ease;
+  }
+
+  .icon {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    color: #4a4a4a;
+    transition: transform 0.3s ease, color 0.25s ease;
+  }
+
+  .icon :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .label {
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1.45;
+    max-width: 14rem;
+  }
+
+  .item:hover,
+  .item:focus-visible {
+    color: var(--color-text);
+  }
+
+  .item:hover .icon,
+  .item:focus-visible .icon {
+    color: var(--color-rule);
+    transform: translateY(-3px);
+  }
+
+  @media (min-width: 900px) {
+    .services {
+      padding-block: 1rem 5rem;
+    }
+
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.4rem 2.5rem;
+    }
+
+    .item {
+      min-height: 10.5rem;
+      padding: 1.75rem 1rem 2rem;
+    }
+
+    .icon {
+      width: 4.25rem;
+      height: 4.25rem;
+    }
+
+    .label {
+      font-size: 0.8125rem;
+      letter-spacing: 0.12em;
+    }
+  }
+</style>

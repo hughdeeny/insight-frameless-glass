@@ -1,0 +1,218 @@
+---
+import { Image } from 'astro:assets';
+import logoMark from '../assets/images/logo-mark.png';
+import { navItems, site } from '../data/site';
+---
+
+<header class="header">
+  <div class="shell bar">
+    <a class="brand" href="/" aria-label={`${site.name} home`}>
+      <Image src={logoMark} alt="" width={42} height={42} densities={[1, 2]} />
+    </a>
+
+    <details class="nav" id="site-nav">
+      <summary class="menu-btn">
+        <span class="burger" aria-hidden="true">
+          <span></span>
+          <span></span>
+        </span>
+        <span class="menu-label">Menu</span>
+      </summary>
+
+      <div class="panel">
+        <nav class="panel-nav" aria-label="Primary">
+          <ul>
+            {
+              navItems.map((item) => (
+                <li>
+                  <a href={item.href}>{item.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </details>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    const nav = document.getElementById('site-nav');
+    if (!(nav instanceof HTMLDetailsElement)) return;
+
+    const setOpen = () => {
+      document.body.classList.toggle('nav-open', nav.open);
+      nav.querySelector('summary')?.setAttribute('aria-expanded', String(nav.open));
+    };
+
+    nav.addEventListener('toggle', setOpen);
+    setOpen();
+
+    nav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        nav.open = false;
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') nav.open = false;
+    });
+  })();
+</script>
+
+<style>
+  .header {
+    position: relative;
+    z-index: 120;
+    background: #fff;
+    min-height: var(--header-height);
+  }
+
+  :global(body.nav-open) .header {
+    background: transparent;
+  }
+
+  :global(body.nav-open) .brand {
+    visibility: hidden;
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--header-height);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .brand img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+  }
+
+  .menu-btn {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    list-style: none;
+    cursor: pointer;
+    color: var(--color-rule);
+    padding: 0.45rem 0.1rem;
+  }
+
+  .nav[open] .menu-btn {
+    color: #fff;
+  }
+
+  .menu-btn::-webkit-details-marker,
+  .menu-btn::marker {
+    display: none;
+    content: '';
+  }
+
+  .menu-label {
+    display: none;
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 22px;
+  }
+
+  .burger span {
+    display: block;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 0.25s ease, width 0.25s ease;
+  }
+
+  .burger span:first-child {
+    width: 22px;
+  }
+
+  .burger span:last-child {
+    width: 15px;
+  }
+
+  .nav[open] .burger span:first-child {
+    transform: translateY(3.75px) rotate(45deg);
+  }
+
+  .nav[open] .burger span:last-child {
+    width: 22px;
+    transform: translateY(-3.75px) rotate(-45deg);
+  }
+
+  .nav[open] .menu-label {
+    visibility: hidden;
+  }
+
+  .panel {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: none;
+    place-items: center;
+    background: var(--color-navy);
+    padding: 5rem 1.5rem 3rem;
+  }
+
+  .nav[open] .panel {
+    display: grid;
+  }
+
+  .panel-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  .panel-nav a {
+    display: inline-block;
+    padding: 0.7rem 0.5rem;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-size: 0.95rem;
+    font-weight: 400;
+    transition: opacity 0.2s ease;
+  }
+
+  .panel-nav a:hover,
+  .panel-nav a:focus-visible {
+    opacity: 0.65;
+  }
+
+  @media (min-width: 768px) {
+    .brand img {
+      width: 42px;
+      height: 42px;
+    }
+
+    .menu-label {
+      display: inline;
+    }
+
+    .panel-nav a {
+      font-size: 1.05rem;
+      padding: 0.85rem 0.5rem;
+    }
+  }
+</style>

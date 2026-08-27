@@ -6,69 +6,78 @@ import LeadForm from './LeadForm.astro';
 ---
 
 <LeadForm />
-<footer class="footer">
-  <div class="shell inner">
-    <div class="top">
-      <a class="brand" href="/" aria-label={`${site.name} home`}>
-        <Image
-          src={logoStacked}
-          alt=""
-          width={168}
-          height={192}
-          widths={[168, 336]}
-          sizes="168px"
-          class="logo"
-        />
-      </a>
-      <ul class="socials">
-        {
-          socials.map((item) => (
-            <li>
-              <a href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label}>
-                {item.icon === 'linkedin' && (
-                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="1" stroke="currentColor" stroke-width="1.3" />
-                    <path d="M8 10.5V17M8 7.5v.2M12 17v-4.2c0-1.3.7-2.3 2.1-2.3 1.4 0 1.9 1 1.9 2.4V17" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
-                  </svg>
-                )}
-                {item.icon === 'facebook' && (
-                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.3" />
-                    <path d="M13 8h1.6M13 12h2.4M13 8v8M13 8h-1.4A1.6 1.6 0 0 0 10 9.6V12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
-                  </svg>
-                )}
-                {item.icon === 'instagram' && (
-                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.3" />
-                    <circle cx="12" cy="12" r="3.4" stroke="currentColor" stroke-width="1.3" />
-                    <circle cx="16.4" cy="7.6" r="0.8" fill="currentColor" />
-                  </svg>
-                )}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+<div class="band">
+  <div class="shell">
+    <footer class="footer">
+      <div class="inner">
+        <div class="top">
+          <a class="brand" href="/" aria-label={`${site.name} home`}>
+            <Image
+              src={logoStacked}
+              alt=""
+              width={168}
+              height={192}
+              widths={[168, 336]}
+              sizes="168px"
+              class="logo"
+            />
+          </a>
+          <ul class="socials">
+            {
+              socials.map((item) => (
+                <li>
+                  <a href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label}>
+                    {item.icon === 'linkedin' && (
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <rect x="3" y="3" width="18" height="18" rx="1" stroke="currentColor" stroke-width="1.3" />
+                        <path d="M8 10.5V17M8 7.5v.2M12 17v-4.2c0-1.3.7-2.3 2.1-2.3 1.4 0 1.9 1 1.9 2.4V17" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+                      </svg>
+                    )}
+                    {item.icon === 'facebook' && (
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.3" />
+                        <path d="M13 8h1.6M13 12h2.4M13 8v8M13 8h-1.4A1.6 1.6 0 0 0 10 9.6V12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+                      </svg>
+                    )}
+                    {item.icon === 'instagram' && (
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.3" />
+                        <circle cx="12" cy="12" r="3.4" stroke="currentColor" stroke-width="1.3" />
+                        <circle cx="16.4" cy="7.6" r="0.8" fill="currentColor" />
+                      </svg>
+                    )}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
 
-    <div class="bottom">
-      <nav aria-label="Footer">
-        <ul class="links">
-          {
-            navItems.map((item) => (
-              <li>
-                <a href={item.href}>{item.label}</a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
-      <p class="copy">&copy; {site.name}</p>
-    </div>
+        <div class="bottom">
+          <nav aria-label="Footer">
+            <ul class="links">
+              {
+                navItems.map((item) => (
+                  <li>
+                    <a href={item.href}>{item.label}</a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+          <p class="copy">&copy; {site.name}</p>
+        </div>
+      </div>
+    </footer>
   </div>
-</footer>
+</div>
 
 <style>
+  .band {
+    padding-bottom: 1.75rem;
+    background: var(--color-bg);
+  }
+
   .footer {
     position: relative;
     isolation: isolate;
@@ -78,7 +87,7 @@ import LeadForm from './LeadForm.astro';
     background-image: url('/images/footer-pattern.png');
     background-size: cover;
     background-position: center;
-    margin-top: 0;
+    border-radius: var(--radius-frame);
     min-height: 22rem;
   }
 
@@ -89,7 +98,7 @@ import LeadForm from './LeadForm.astro';
     flex-direction: column;
     justify-content: space-between;
     min-height: 22rem;
-    padding-block: 3.5rem 2rem;
+    padding: 3.5rem var(--gutter) 2rem;
     gap: 4rem;
   }
 
@@ -199,6 +208,10 @@ import LeadForm from './LeadForm.astro';
   }
 
   @media (min-width: 1024px) {
+    .band {
+      padding-bottom: 2.25rem;
+    }
+
     .footer,
     .inner {
       min-height: 32rem;

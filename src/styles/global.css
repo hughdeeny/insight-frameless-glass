@@ -13,7 +13,7 @@
   --color-photo: #121314;
   --font: 'Jost', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --max-width: 1400px;
-  --header-height: 76px;
+  --header-height: 84px;
   --gutter: 1.25rem;
   --focus: 1px solid var(--color-text);
   --weight-light: 300;
@@ -30,6 +30,7 @@
   --duration: 0.45s;
   --duration-fast: 0.28s;
   --radius: 0;
+  --radius-frame: 6px;
 }
 
 *,
@@ -217,7 +218,7 @@ h3 {
 @media (min-width: 768px) {
   :root {
     --gutter: 2.5rem;
-    --header-height: 80px;
+    --header-height: 92px;
   }
 }
 

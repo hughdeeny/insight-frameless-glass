@@ -3,9 +3,15 @@ import { Image } from 'astro:assets';
 import logoStacked from '../assets/images/logo-stacked.png';
 import { navItems, site, socials } from '../data/site';
 import LeadForm from './LeadForm.astro';
+
+interface Props {
+  showLeadForm?: boolean;
+}
+
+const { showLeadForm = true } = Astro.props;
 ---
 
-<LeadForm />
+{showLeadForm && <LeadForm />}
 <div class="band">
   <div class="shell">
     <footer class="footer">

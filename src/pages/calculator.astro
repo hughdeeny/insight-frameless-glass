@@ -1,0 +1,633 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+const heights = [
+  { value: '1.0', label: '1.0 m', note: 'Balcony / terrace' },
+  { value: '1.2', label: '1.2 m', note: 'Pool fence standard' },
+  { value: '1.5', label: '1.5 m', note: 'Elevated outlook' },
+  { value: '1.8', label: '1.8 m', note: 'Privacy / boundary' },
+] as const;
+
+const thicknesses = [
+  { value: '8', label: '8 mm', note: 'Light residential' },
+  { value: '10', label: '10 mm', note: 'Most common' },
+  { value: '12', label: '12 mm', note: 'Premium / exposed' },
+] as const;
+
+const finishes = [
+  { value: 'standard', label: 'Standard clear', note: 'Polished edge, clear glass' },
+  { value: 'ultra', label: 'Ultra clear', note: 'Low-iron, brighter edge' },
+  { value: 'tinted', label: 'Grey tint', note: 'Soft privacy + glare control' },
+  { value: 'architectural', label: 'Architectural', note: 'Premium hardware + glass' },
+] as const;
+---
+
+<Layout
+  title="Free Glass Fence Quote Calculator | Insight Frameless Glass Sydney"
+  description="Get an indicative frameless glass fence estimate for your Sydney project. Adjust length, height, glass thickness and finish, then request a firm quote."
+>
+  <Header />
+  <main id="main">
+    <section class="page">
+      <div class="shell layout">
+        <div class="intro">
+          <p class="eyebrow">Free estimate tool</p>
+          <h1>Glass fence quote calculator</h1>
+          <p class="lead">
+            Dial in the metres, height, glass thickness and finish for a quick
+            indicative range. Final pricing is confirmed after a free site measure
+            with {site.name}.
+          </p>
+          <ul class="points">
+            <li>Built for frameless glass pool fencing and balustrades</li>
+            <li>Estimate updates live as you adjust the details</li>
+            <li>No obligation — call or send through for a firm quote</li>
+          </ul>
+        </div>
+
+        <div class="tool" id="quote-calculator">
+          <form class="panel" novalidate>
+            <div class="field">
+              <label for="length">Fence length</label>
+              <div class="meter">
+                <input
+                  id="length"
+                  name="length"
+                  type="number"
+                  inputmode="decimal"
+                  min="1"
+                  max="120"
+                  step="0.5"
+                  value="18"
+                  required
+                />
+                <span class="unit">metres</span>
+              </div>
+              <input
+                id="length-range"
+                class="range"
+                type="range"
+                min="1"
+                max="60"
+                step="0.5"
+                value="18"
+                aria-label="Fence length slider"
+              />
+            </div>
+
+            <fieldset class="field">
+              <legend>Fence height</legend>
+              <div class="options" role="radiogroup" aria-label="Fence height">
+                {
+                  heights.map((item, index) => (
+                    <label class="option">
+                      <input
+                        type="radio"
+                        name="height"
+                        value={item.value}
+                        checked={index === 1}
+                      />
+                      <span class="option-body">
+                        <span class="option-label">{item.label}</span>
+                        <span class="option-note">{item.note}</span>
+                      </span>
+                    </label>
+                  ))
+                }
+              </div>
+            </fieldset>
+
+            <fieldset class="field">
+              <legend>Glass thickness</legend>
+              <div class="options" role="radiogroup" aria-label="Glass thickness">
+                {
+                  thicknesses.map((item, index) => (
+                    <label class="option">
+                      <input
+                        type="radio"
+                        name="thickness"
+                        value={item.value}
+                        checked={index === 1}
+                      />
+                      <span class="option-body">
+                        <span class="option-label">{item.label}</span>
+                        <span class="option-note">{item.note}</span>
+                      </span>
+                    </label>
+                  ))
+                }
+              </div>
+            </fieldset>
+
+            <fieldset class="field">
+              <legend>Finish quality</legend>
+              <div class="options finishes" role="radiogroup" aria-label="Finish quality">
+                {
+                  finishes.map((item, index) => (
+                    <label class="option">
+                      <input
+                        type="radio"
+                        name="finish"
+                        value={item.value}
+                        checked={index === 0}
+                      />
+                      <span class="option-body">
+                        <span class="option-label">{item.label}</span>
+                        <span class="option-note">{item.note}</span>
+                      </span>
+                    </label>
+                  ))
+                }
+              </div>
+            </fieldset>
+
+            <label class="toggle">
+              <input id="gate" name="gate" type="checkbox" checked />
+              <span>
+                Include one compliant pool gate
+                <small>Self-closing / self-latching opening</small>
+              </span>
+            </label>
+          </form>
+
+          <aside class="result" aria-live="polite">
+            <p class="result-kicker">Indicative estimate</p>
+            <p class="result-range">
+              <span id="estimate-low">$0</span>
+              <span class="dash">–</span>
+              <span id="estimate-high">$0</span>
+            </p>
+            <p class="result-rate">
+              About <span id="estimate-rate">$0</span> per metre installed
+            </p>
+            <p class="result-note" id="estimate-summary">
+              Adjust the details to see your range.
+            </p>
+            <div class="actions">
+              <a class="btn" href="/contact">Request a firm quote</a>
+              <a class="phone" href={site.phoneHref}>Call {site.phone}</a>
+            </div>
+            <p class="disclaimer">
+              Guide only for a standard Sydney residential install. Site access,
+              slopes, removal of existing fencing, core drilling and compliance
+              certification can change the final figure.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<script is:inline>
+  (function () {
+    const root = document.getElementById('quote-calculator');
+    if (!root) return;
+
+    const lengthInput = root.querySelector('#length');
+    const lengthRange = root.querySelector('#length-range');
+    const gateInput = root.querySelector('#gate');
+    const lowEl = root.querySelector('#estimate-low');
+    const highEl = root.querySelector('#estimate-high');
+    const rateEl = root.querySelector('#estimate-rate');
+    const summaryEl = root.querySelector('#estimate-summary');
+
+    const heightMult = { '1.0': 0.92, '1.2': 1, '1.5': 1.14, '1.8': 1.28 };
+    const thicknessMult = { '8': 0.9, '10': 1, '12': 1.18 };
+    const finishMult = {
+      standard: 1,
+      ultra: 1.12,
+      tinted: 1.08,
+      architectural: 1.28,
+    };
+    const finishLabel = {
+      standard: 'standard clear',
+      ultra: 'ultra clear',
+      tinted: 'grey tint',
+      architectural: 'architectural',
+    };
+
+    const money = (value) =>
+      new Intl.NumberFormat('en-AU', {
+        style: 'currency',
+        currency: 'AUD',
+        maximumFractionDigits: 0,
+      }).format(value);
+
+    const selected = (name) => {
+      const el = root.querySelector(`input[name="${name}"]:checked`);
+      return el ? el.value : null;
+    };
+
+    const syncLength = (value, source) => {
+      const next = Math.min(120, Math.max(1, Number(value) || 1));
+      if (source !== 'number') lengthInput.value = String(next);
+      if (source !== 'range') lengthRange.value = String(Math.min(60, next));
+      return next;
+    };
+
+    const calculate = () => {
+      const metres = syncLength(lengthInput.value, 'calc');
+      const height = selected('height') || '1.2';
+      const thickness = selected('thickness') || '10';
+      const finish = selected('finish') || 'standard';
+      const includeGate = gateInput.checked;
+
+      const baseRate = 520;
+      const rate =
+        baseRate *
+        (heightMult[height] || 1) *
+        (thicknessMult[thickness] || 1) *
+        (finishMult[finish] || 1);
+
+      const fenceLow = metres * rate * 0.9;
+      const fenceHigh = metres * rate * 1.12;
+      const gateLow = includeGate ? 750 : 0;
+      const gateHigh = includeGate ? 1400 : 0;
+      const low = Math.round((fenceLow + gateLow) / 50) * 50;
+      const high = Math.round((fenceHigh + gateHigh) / 50) * 50;
+
+      lowEl.textContent = money(low);
+      highEl.textContent = money(high);
+      rateEl.textContent = money(Math.round(rate));
+      summaryEl.textContent = [
+        `${metres} m`,
+        `${height} m high`,
+        `${thickness} mm`,
+        finishLabel[finish] || finish,
+        includeGate ? 'with gate' : 'fence only',
+      ].join(' · ');
+    };
+
+    lengthInput.addEventListener('input', () => {
+      syncLength(lengthInput.value, 'number');
+      calculate();
+    });
+    lengthRange.addEventListener('input', () => {
+      syncLength(lengthRange.value, 'range');
+      calculate();
+    });
+    root.querySelectorAll('input[type="radio"], #gate').forEach((input) => {
+      input.addEventListener('change', calculate);
+    });
+
+    calculate();
+  })();
+</script>
+
+<style>
+  .page {
+    padding-block: 2.75rem 1rem;
+    background:
+      radial-gradient(ellipse 80% 55% at 0% 0%, rgba(6, 43, 73, 0.05), transparent 55%),
+      var(--color-bg);
+  }
+
+  .layout {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .eyebrow {
+    margin-bottom: 0.85rem;
+    font-size: var(--text-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-tight);
+    max-width: 14ch;
+    margin-bottom: 1.1rem;
+  }
+
+  .lead {
+    max-width: 34rem;
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+
+  .points {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+    max-width: 32rem;
+  }
+
+  .points li {
+    position: relative;
+    padding-left: 1.15rem;
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  .points li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.45rem;
+    height: 1px;
+    background: var(--color-navy);
+  }
+
+  .tool {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .panel,
+  .result {
+    background: var(--color-surface);
+    border: 1px solid rgba(6, 43, 73, 0.16);
+    border-radius: var(--radius-frame);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.65) inset,
+      0 22px 40px -32px rgba(6, 43, 73, 0.22);
+  }
+
+  .panel {
+    display: grid;
+    gap: 1.6rem;
+    padding: 1.25rem;
+  }
+
+  .field {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  label,
+  legend {
+    font-size: var(--text-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+
+  .meter {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0.85rem;
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: 0.35rem;
+  }
+
+  .meter input {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+    outline: none;
+    padding: 0.15rem 0;
+  }
+
+  .unit {
+    font-size: var(--text-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .range {
+    width: 100%;
+    accent-color: var(--color-navy);
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+  }
+
+  .option {
+    cursor: pointer;
+  }
+
+  .option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .option-body {
+    display: grid;
+    gap: 0.2rem;
+    min-height: 100%;
+    padding: 0.85rem 0.9rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-frame);
+    transition:
+      border-color var(--duration-fast) var(--ease),
+      background-color var(--duration-fast) var(--ease);
+  }
+
+  .option input:checked + .option-body {
+    border-color: var(--color-navy);
+    background: rgba(6, 43, 73, 0.04);
+  }
+
+  .option input:focus-visible + .option-body {
+    outline: var(--focus);
+    outline-offset: 3px;
+  }
+
+  .option-label {
+    font-size: 0.95rem;
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.01em;
+    text-transform: none;
+  }
+
+  .option-note {
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--color-muted);
+    line-height: 1.35;
+  }
+
+  .toggle {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.85rem;
+    align-items: start;
+    cursor: pointer;
+    padding-top: 0.25rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .toggle input {
+    margin-top: 0.2rem;
+    accent-color: var(--color-navy);
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .toggle span {
+    display: grid;
+    gap: 0.25rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    text-transform: none;
+  }
+
+  .toggle small {
+    color: var(--color-muted);
+    font-size: 0.78rem;
+  }
+
+  .result {
+    padding: 1.35rem 1.25rem 1.25rem;
+    background:
+      linear-gradient(165deg, var(--color-navy) 0%, var(--color-navy-deep) 100%);
+    color: var(--color-white);
+    border-color: transparent;
+    box-shadow: 0 22px 40px -28px rgba(6, 43, 73, 0.55);
+  }
+
+  .result-kicker {
+    font-size: var(--text-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    opacity: 0.72;
+    margin-bottom: 0.85rem;
+  }
+
+  .result-range {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.45rem 0.65rem;
+    font-size: clamp(1.85rem, 5vw, 2.55rem);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.05;
+  }
+
+  .dash {
+    opacity: 0.55;
+    font-weight: var(--weight-light);
+  }
+
+  .result-rate {
+    margin-top: 0.7rem;
+    font-size: 0.92rem;
+    opacity: 0.82;
+  }
+
+  .result-note {
+    margin-top: 0.85rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    line-height: 1.5;
+  }
+
+  .actions {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 1.6rem;
+  }
+
+  .result .btn {
+    justify-content: center;
+    border-color: rgba(255, 255, 255, 0.85);
+    color: var(--color-white);
+  }
+
+  .result .btn:hover,
+  .result .btn:focus-visible {
+    background: var(--color-white);
+    color: var(--color-navy);
+    border-color: var(--color-white);
+  }
+
+  .phone {
+    text-align: center;
+    text-decoration: none;
+    font-size: var(--text-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    opacity: 0.78;
+    transition: opacity var(--duration-fast) var(--ease);
+  }
+
+  .phone:hover,
+  .phone:focus-visible {
+    opacity: 1;
+  }
+
+  .disclaimer {
+    margin-top: 1.35rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    font-size: 0.78rem;
+    line-height: 1.55;
+    opacity: 0.62;
+  }
+
+  @media (min-width: 700px) {
+    .finishes {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .page {
+      padding-block: 3.5rem 1.5rem;
+    }
+
+    .layout {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.15fr);
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    .intro {
+      position: sticky;
+      top: 1.5rem;
+      padding-top: 0.4rem;
+    }
+
+    .tool {
+      grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+      align-items: stretch;
+      gap: 1.15rem;
+    }
+
+    .panel {
+      padding: 1.5rem;
+    }
+
+    .result {
+      display: flex;
+      flex-direction: column;
+      padding: 1.6rem 1.4rem 1.35rem;
+    }
+
+    .actions {
+      margin-top: auto;
+      padding-top: 1.75rem;
+    }
+  }
+</style>

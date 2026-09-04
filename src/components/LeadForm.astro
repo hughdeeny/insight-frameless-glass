@@ -1,30 +1,46 @@
 ---
+import { Image } from 'astro:assets';
+import tomPortrait from '../assets/images/tom-portrait.jpg';
+
 const formId = '6ctsjNoKtJ8i6YmCDxMg';
 const iframeId = `inline-${formId}`;
 ---
 
 <section class="lead-form" aria-label="Website Form">
   <div class="shell">
-    <div class="frame">
-      <iframe
-        src={`https://links.screwdrivermarketing.com.au/widget/form/${formId}`}
-        style="width:100%;height:100%;border:none;border-radius:3px"
-        id={iframeId}
-        data-layout={"{'id':'INLINE'}"}
-        data-trigger-type="alwaysShow"
-        data-trigger-value=""
-        data-activation-type="alwaysActivated"
-        data-activation-value=""
-        data-deactivation-type="neverDeactivate"
-        data-deactivation-value=""
-        data-form-name="Website Form"
-        data-height="564"
-        data-layout-iframe-id={iframeId}
-        data-form-id={formId}
-        data-cookie-consent="true"
-        data-cookie-consent-provider="auto"
-        title="Website Form"
-      ></iframe>
+    <div class="layout">
+      <figure class="portrait">
+        <Image
+          src={tomPortrait}
+          alt="Tom Hammond, founder of Insight Frameless Glass Sydney"
+          widths={[480, 720, 960]}
+          sizes="(min-width: 900px) 36vw, 100vw"
+          quality={80}
+          class="photo"
+        />
+      </figure>
+
+      <div class="form-card">
+        <iframe
+          src={`https://links.screwdrivermarketing.com.au/widget/form/${formId}`}
+          style="width:100%;height:100%;border:none;border-radius:3px"
+          id={iframeId}
+          data-layout={"{'id':'INLINE'}"}
+          data-trigger-type="alwaysShow"
+          data-trigger-value=""
+          data-activation-type="alwaysActivated"
+          data-activation-value=""
+          data-deactivation-type="neverDeactivate"
+          data-deactivation-value=""
+          data-form-name="Website Form"
+          data-height="564"
+          data-layout-iframe-id={iframeId}
+          data-form-id={formId}
+          data-cookie-consent="true"
+          data-cookie-consent-provider="auto"
+          title="Website Form"
+        ></iframe>
+      </div>
     </div>
   </div>
 </section>
@@ -37,10 +53,29 @@ const iframeId = `inline-${formId}`;
     background: var(--color-bg);
   }
 
-  .frame {
+  .layout {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .portrait {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    aspect-ratio: 1;
+    background: var(--color-photo);
+    border-radius: var(--radius-frame);
+  }
+
+  .photo {
     width: 100%;
-    max-width: 34rem;
-    margin-inline: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 18%;
+  }
+
+  .form-card {
+    width: 100%;
     padding: 0.75rem 0.75rem 0.55rem;
     background: var(--color-surface);
     border: 1px solid rgba(6, 43, 73, 0.16);
@@ -50,7 +85,7 @@ const iframeId = `inline-${formId}`;
       0 22px 40px -32px rgba(6, 43, 73, 0.22);
   }
 
-  .frame :global(.ep-iFrameContainer) {
+  .form-card :global(.ep-iFrameContainer) {
     width: 100% !important;
     max-width: 100% !important;
   }
@@ -64,12 +99,34 @@ const iframeId = `inline-${formId}`;
     background: var(--color-surface);
   }
 
+  @media (min-width: 800px) {
+    .layout {
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      align-items: stretch;
+      gap: 1.15rem;
+    }
+
+    .portrait {
+      aspect-ratio: auto;
+      min-height: 100%;
+    }
+
+    .photo {
+      position: absolute;
+      inset: 0;
+    }
+  }
+
   @media (min-width: 900px) {
     .lead-form {
       padding-block: 4.5rem 3rem;
     }
 
-    .frame {
+    .layout {
+      gap: 1.35rem;
+    }
+
+    .form-card {
       padding: 0.95rem 0.95rem 0.75rem;
     }
   }

@@ -5,34 +5,32 @@ import { site } from '../data/site';
 ---
 
 <section class="hero" aria-label="Introduction">
-  <div class="shell">
-    <div class="frame">
-      <Image
-        src={heroImage}
-        alt={`${site.name} logo over stacked architectural glass sheets`}
-        widths={[720, 1100, 1600, 1920, 2400]}
-        sizes="(min-width: 1920px) 1880px, 100vw"
-        loading="eager"
-        fetchpriority="high"
-        quality={85}
-        class="photo"
-      />
-    </div>
+  <div class="frame">
+    <Image
+      src={heroImage}
+      alt={`${site.name} logo over stacked architectural glass sheets`}
+      widths={[720, 1100, 1600, 1920, 2400]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      quality={85}
+      class="photo"
+    />
   </div>
 </section>
 
 <style>
   .hero {
-    padding-block: 0.1rem 0.7rem;
+    padding-block: 0 0.7rem;
   }
 
   .frame {
     position: relative;
     overflow: hidden;
+    width: 100%;
     aspect-ratio: 4 / 5;
     min-height: 22rem;
     background: var(--color-photo);
-    border-radius: var(--radius-frame);
   }
 
   .photo {
@@ -40,25 +38,23 @@ import { site } from '../data/site';
     inset: 0;
     width: 100%;
     height: 100%;
+    max-width: none;
+    max-height: none;
     object-fit: cover;
-    object-position: center;
+    object-position: center center;
   }
 
   @media (min-width: 600px) {
     .frame {
       aspect-ratio: 16 / 9;
       min-height: 0;
+      max-height: 90vh;
     }
   }
 
   @media (min-width: 1024px) {
     .hero {
-      padding-block: 0.12rem 0.9rem;
-    }
-
-    .frame {
-      aspect-ratio: 16 / 9;
-      max-height: 90vh;
+      padding-block: 0 0.9rem;
     }
   }
 </style>

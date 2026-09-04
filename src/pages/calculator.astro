@@ -8,7 +8,6 @@ const heights = [
   { value: '1.0', label: '1.0 m', note: 'Balcony / terrace' },
   { value: '1.2', label: '1.2 m', note: 'Pool fence standard' },
   { value: '1.5', label: '1.5 m', note: 'Elevated outlook' },
-  { value: '1.8', label: '1.8 m', note: 'Privacy / boundary' },
 ] as const;
 
 const thicknesses = [
@@ -196,7 +195,7 @@ const finishes = [
     const rateEl = root.querySelector('#estimate-rate');
     const summaryEl = root.querySelector('#estimate-summary');
 
-    const heightMult = { '1.0': 0.92, '1.2': 1, '1.5': 1.14, '1.8': 1.28 };
+    const heightMult = { '1.0': 0.92, '1.2': 1, '1.5': 1.14 };
     const thicknessMult = { '8': 0.9, '10': 1, '12': 1.18 };
     const finishMult = {
       standard: 1,
